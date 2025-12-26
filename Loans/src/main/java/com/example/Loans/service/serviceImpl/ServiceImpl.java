@@ -1,8 +1,11 @@
 package com.example.Loans.service.serviceImpl;
 
 import com.example.Loans.constant.LoanConstants;
+import com.example.Loans.dto.LoansDto;
 import com.example.Loans.entity.Loans;
 import com.example.Loans.exception.LoanAlreadyExistsException;
+import com.example.Loans.exception.LoanNotFoundException;
+import com.example.Loans.mapper.LoansMapper;
 import com.example.Loans.repository.LoansRepository;
 import com.example.Loans.service.ILoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +22,16 @@ public class ServiceImpl implements ILoanService {
     private LoansRepository loansRepository;
 
     @Override
-    public void createLoan(String mobileNumber){
+    public void createLoan(String mobileNumber) {
 
-        Optional<Loans> optionalloan = loansRepository.findByMobileNumber(mobileNumber);
-        if(optionalloan.isPresent()){
+        Optional<Loans> optional = loansRepository.findByMobileNumber(mobileNumber);
+        if (optional.isPresent()) {
             throw new LoanAlreadyExistsException(mobileNumber);
-        }else{
+        } else {
             Loans loan = new Loans();
             loan = createNewLoan(mobileNumber);
             loansRepository.save(loan);
         }
-
 
 
     }
@@ -45,5 +47,22 @@ public class ServiceImpl implements ILoanService {
         loans.setAmountPaid(0);
         loans.setOutstandingAmount(loans.getTotalLoan() - loans.getAmountPaid());
         return loans;
+
+
     }
+
+
+    @Override
+    public LoansDto fetchLoan(String mobileNumber) {
+        Optional<Loans> optionLoan = loansRepository.findByMobileNumber(mobileNumber);
+
+        if (optionLoan.isPresent()) {
+            Loans loans = optionLoan.get();
+            return LoansMapper.LoanstoLoansDto(loans);
+
+        } else {
+            throw new LoanNotFoundException(mobileNumber);
+        }
+    }
+
 }

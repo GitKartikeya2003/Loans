@@ -1,24 +1,17 @@
 package com.example.Loans.service;
 
 
+import com.example.Loans.dto.LoansDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public interface ILoanService {
 
-    /**
-     *
-     * @param mobileNumber - Mobile Number of the Customer
-     */
     void createLoan(String mobileNumber);
 
 
-//    LoansDto fetchLoan(String mobileNumber);
-//
-//    /**
-//     *
-//     * @param loansDto - LoansDto Object
-//     * @return boolean indicating if the update of card details is successful or not
-//     */
+    LoansDto fetchLoan(String mobileNumber);
+
+
 //    boolean updateLoan(LoansDto loansDto);
 //
 //    /**

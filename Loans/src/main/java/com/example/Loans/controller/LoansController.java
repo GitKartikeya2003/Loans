@@ -2,9 +2,11 @@ package com.example.Loans.controller;
 
 
 import com.example.Loans.constant.LoanConstants;
+import com.example.Loans.dto.LoansDto;
 import com.example.Loans.dto.ResponseDto;
 import com.example.Loans.service.ILoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,12 @@ public class LoansController {
 
     }
 
+    @GetMapping("/fetch")
+    public ResponseEntity<LoansDto> fetchLoan(String mobileNumber) {
+
+        LoansDto loansDto = iLoanService.fetchLoan(mobileNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(loansDto);
+    }
 
 
 }
