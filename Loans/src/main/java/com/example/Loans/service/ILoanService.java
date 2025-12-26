@@ -14,6 +14,6 @@ public interface ILoanService {
 
     boolean updateLoan(LoansDto loansDto);
 
-//    boolean deleteLoan(String mobileNumber);
+  boolean deleteLoan(String mobileNumber);
 
 }

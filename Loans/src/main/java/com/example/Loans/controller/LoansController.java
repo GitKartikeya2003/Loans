@@ -47,5 +47,16 @@ public class LoansController {
        }
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<ResponseDto> deleteLoan(@RequestParam String mobileNumber) {
+        boolean isDeleted= iLoanService.deleteLoan(mobileNumber);
+        if(isDeleted){
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(LoanConstants.STATUS_200, LoanConstants.MESSAGE_200));
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(LoanConstants.STATUS_500, LoanConstants.MESSAGE_500));
+        }
+    }
+
 
 }
