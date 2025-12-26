@@ -32,20 +32,22 @@ public class GlobalExceptionHandler {
     }
 
 
+    @ExceptionHandler(LoanNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handleLoanNotFoundException(LoanNotFoundException exception, WebRequest webRequest) {
 
         ErrorResponseDto errorResponseDto =
                 new ErrorResponseDto(webRequest
                         .getDescription(false), HttpStatus.NOT_FOUND, exception.getMessage(), LocalDateTime.now());
 
-        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(LoanAlreadyExistsException.class)
     public ResponseEntity<ErrorResponseDto> handleLoanAlreadyExistsException(LoanAlreadyExistsException exception, WebRequest webRequest) {
 
         ErrorResponseDto errorResponseDto =
                 new ErrorResponseDto(webRequest
-                        .getDescription(false), HttpStatus.NOT_FOUND, exception.getMessage(), LocalDateTime.now());
+                        .getDescription(false), HttpStatus.BAD_REQUEST, exception.getMessage(), LocalDateTime.now());
 
         return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }

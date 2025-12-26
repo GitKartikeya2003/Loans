@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -24,17 +21,30 @@ public class LoansController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createLoan(String mobileNumber) {
+    public ResponseEntity<ResponseDto> createLoan(@RequestParam String mobileNumber) {
         iLoanService.createLoan(mobileNumber);
         return ResponseEntity.ok().body(new ResponseDto(LoanConstants.STATUS_201, LoanConstants.MESSAGE_201));
 
     }
 
     @GetMapping("/fetch")
-    public ResponseEntity<LoansDto> fetchLoan(String mobileNumber) {
+    public ResponseEntity<LoansDto> fetchLoan(@RequestParam String mobileNumber) {
 
         LoansDto loansDto = iLoanService.fetchLoan(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(loansDto);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<ResponseDto> updateLoan(@RequestBody LoansDto loansDto) {
+
+       boolean isUpdate= iLoanService.updateLoan(loansDto);
+       if(isUpdate){
+           return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(LoanConstants.STATUS_200, LoanConstants.MESSAGE_200));
+       }
+       else {
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(LoanConstants.STATUS_500, LoanConstants.MESSAGE_500));
+
+       }
     }
 
 

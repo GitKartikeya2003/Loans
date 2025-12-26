@@ -47,8 +47,6 @@ public class ServiceImpl implements ILoanService {
         loans.setAmountPaid(0);
         loans.setOutstandingAmount(loans.getTotalLoan() - loans.getAmountPaid());
         return loans;
-
-
     }
 
 
@@ -63,6 +61,25 @@ public class ServiceImpl implements ILoanService {
         } else {
             throw new LoanNotFoundException(mobileNumber);
         }
+    }
+
+    @Override
+    public boolean updateLoan(LoansDto loansDto) {
+
+        boolean updateLoan = false;
+
+        if(loansDto != null) {
+
+            Loans loan = loansRepository.findByMobileNumber(loansDto.getMobileNumber()).orElseThrow(
+                    () -> new LoanNotFoundException(loansDto.getMobileNumber())
+            );
+            Loans updatedLoan = LoansMapper.mapToLoans(loansDto, loan);
+            loansRepository.save(updatedLoan);
+            updateLoan = true;
+
+        }
+
+        return updateLoan;
     }
 
 }
