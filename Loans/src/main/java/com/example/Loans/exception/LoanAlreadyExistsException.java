@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class LoanAlreadyExistsException extends RuntimeException {
 
     public LoanAlreadyExistsException(String mobileNumber) {
+
         super("Loan already exist with mobile number"+ mobileNumber);
+
     }
 }

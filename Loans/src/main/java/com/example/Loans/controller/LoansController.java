@@ -37,23 +37,21 @@ public class LoansController {
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateLoan(@RequestBody LoansDto loansDto) {
 
-       boolean isUpdate= iLoanService.updateLoan(loansDto);
-       if(isUpdate){
-           return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(LoanConstants.STATUS_200, LoanConstants.MESSAGE_200));
-       }
-       else {
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(LoanConstants.STATUS_500, LoanConstants.MESSAGE_500));
+        boolean isUpdate = iLoanService.updateLoan(loansDto);
+        if (isUpdate) {
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(LoanConstants.STATUS_200, LoanConstants.MESSAGE_200));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(LoanConstants.STATUS_500, LoanConstants.MESSAGE_500));
 
-       }
+        }
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteLoan(@RequestParam String mobileNumber) {
-        boolean isDeleted= iLoanService.deleteLoan(mobileNumber);
-        if(isDeleted){
+        boolean isDeleted = iLoanService.deleteLoan(mobileNumber);
+        if (isDeleted) {
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(LoanConstants.STATUS_200, LoanConstants.MESSAGE_200));
-        }
-        else {
+        } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(LoanConstants.STATUS_500, LoanConstants.MESSAGE_500));
         }
     }
