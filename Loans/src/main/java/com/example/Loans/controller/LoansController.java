@@ -2,9 +2,11 @@ package com.example.Loans.controller;
 
 
 import com.example.Loans.constant.LoanConstants;
+import com.example.Loans.dto.LoansContactInfoDto;
 import com.example.Loans.dto.LoansDto;
 import com.example.Loans.dto.ResponseDto;
 import com.example.Loans.service.ILoanService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -54,6 +56,15 @@ public class LoansController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(LoanConstants.STATUS_500, LoanConstants.MESSAGE_500));
         }
+    }
+
+    @Autowired
+    private LoansContactInfoDto loansContactInfoDto;
+
+    @GetMapping("/contact-info")
+    public ResponseEntity<LoansContactInfoDto> contactInfo() {
+
+        return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDto);
     }
 
 

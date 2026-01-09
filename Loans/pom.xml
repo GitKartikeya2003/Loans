@@ -11,6 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>Loans</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>Loans</name>
 	<description>Mircroervice for loans</description>
 	<url/>
@@ -102,6 +103,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<name>dockerkartikeya/loans:v1</name>
+					</image>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
