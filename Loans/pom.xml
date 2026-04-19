@@ -152,7 +152,7 @@
 				<version>3.5.1</version>
 				<configuration>
 					<to>
-						<image>dockerkartikeya/loans:v6</image>
+						<image>dockerkartikeya/loans:v8</image>
 					</to>
 				</configuration>
 			</plugin>
