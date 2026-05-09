@@ -7,6 +7,8 @@ import com.example.Loans.dto.LoansDto;
 import com.example.Loans.dto.ResponseDto;
 import com.example.Loans.service.ILoanService;
 import org.apache.coyote.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class LoansController {
 
+    private static final Logger logger = LoggerFactory.getLogger(LoansController.class);
 
     @Autowired
     private ILoanService iLoanService;
@@ -30,8 +33,11 @@ public class LoansController {
     }
 
     @GetMapping("/fetch")
-    public ResponseEntity<LoansDto> fetchLoan(@RequestParam String mobileNumber) {
+    public ResponseEntity<LoansDto> fetchLoan(@RequestHeader("banklycore-correlation-id") String correlationId,
+            @RequestParam String mobileNumber) {
 
+
+        logger.debug("banklycore-correlation-id: {}", correlationId);
         LoansDto loansDto = iLoanService.fetchLoan(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(loansDto);
     }
